@@ -1,0 +1,256 @@
+/* ─────────────────────────────────────────────
+   G.F. SCULPTURE STUDIOS — ANIMATIONS CSS
+   Page curtain, cursor, transitions, will-change.
+───────────────────────────────────────────── */
+
+/* ── PAGE LOAD CURTAIN ───────────────────────── */
+.page-curtain {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-curtain);
+  background-color: var(--near-black);
+  pointer-events: none;
+  transform-origin: top;
+}
+
+/* ── PAGE TRANSITION OVERLAY ─────────────────── */
+.page-transition {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--z-curtain) - 1);
+  background: var(--white);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.page-transition.is-entering {
+  opacity: 1;
+}
+
+/* ── CUSTOM CURSOR ───────────────────────────── */
+.cursor-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: var(--z-cursor);
+  pointer-events: none;
+  mix-blend-mode: normal;
+}
+
+.cursor-dot {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--bronze);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  will-change: transform;
+  transition: width 0.2s ease, height 0.2s ease, background-color 0.2s ease;
+}
+
+.cursor-ring {
+  position: fixed;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--bronze);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  will-change: transform;
+  opacity: 0.6;
+  transition: width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
+}
+
+.cursor-dot.is-hovering {
+  width: 14px;
+  height: 14px;
+}
+
+.cursor-ring.is-hovering {
+  width: 52px;
+  height: 52px;
+  opacity: 0.3;
+}
+
+.cursor-dot.is-clicking {
+  width: 6px;
+  height: 6px;
+}
+
+/* Hide cursors on touch */
+@media (hover: none) {
+  .cursor-dot,
+  .cursor-ring {
+    display: none;
+  }
+}
+
+/* ── SCROLL REVEAL BASE STATES ───────────────── */
+/* Applied by JS to elements before animation plays */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  will-change: opacity, transform;
+}
+
+[data-reveal-left] {
+  opacity: 0;
+  transform: translateX(-28px);
+  will-change: opacity, transform;
+}
+
+[data-reveal-right] {
+  opacity: 0;
+  transform: translateX(28px);
+  will-change: opacity, transform;
+}
+
+[data-reveal-scale] {
+  opacity: 0;
+  transform: scale(0.96);
+  will-change: opacity, transform;
+}
+
+/* SplitText line containers */
+.line-wrap {
+  overflow: hidden;
+  display: block;
+}
+
+/* ── WILL-CHANGE HINTS ───────────────────────── */
+.hero__bg img,
+.statement-piece__image img,
+.h-scroll-track {
+  will-change: transform;
+}
+
+/* ── HORIZONTAL SCROLL LABEL ─────────────────── */
+.h-scroll-progress {
+  position: absolute;
+  bottom: 2.5rem;
+  right: var(--container-pad);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  z-index: 2;
+}
+
+.h-scroll-progress__track {
+  width: 80px;
+  height: 1px;
+  background: rgba(28, 28, 28, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.h-scroll-progress__bar {
+  position: absolute;
+  inset: 0;
+  background: var(--bronze);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.h-scroll-progress__label {
+  font-family: var(--font-sans);
+  font-size: 0.5625rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--mid-grey);
+}
+
+/* ── PORTFOLIO FILTER TRANSITION ─────────────── */
+.portfolio-grid {
+  transition: opacity 0.3s ease;
+}
+
+.portfolio-grid.is-filtering {
+  opacity: 0.5;
+}
+
+/* ── IMAGE PARALLAX CONTAINER ────────────────── */
+.parallax-img {
+  overflow: hidden;
+}
+
+.parallax-img img {
+  transform: scale(1.12);
+  will-change: transform;
+}
+
+/* ── SCROLL INDICATOR ────────────────────────── */
+.scroll-indicator {
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-family: var(--font-sans);
+  font-size: 0.5625rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.scroll-indicator__line {
+  display: block;
+  width: 1px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.3);
+  animation: scrollLineY 2s ease infinite;
+  transform-origin: top;
+}
+
+@keyframes scrollLineY {
+  0%, 100% { transform: scaleY(1); opacity: 0.3; }
+  50% { transform: scaleY(1.5); opacity: 0.7; }
+}
+
+/* ── NUMBER COUNTER ANIM ─────────────────────── */
+.stat-number {
+  display: inline-block;
+  font-family: var(--font-serif);
+  font-size: clamp(3rem, 6vw, 6rem);
+  font-weight: var(--fw-light);
+  color: var(--near-black);
+}
+
+/* ── REDUCED MOTION ──────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  [data-reveal],
+  [data-reveal-left],
+  [data-reveal-right],
+  [data-reveal-scale] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .page-curtain {
+    display: none !important;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    cursor: auto;
+  }
+
+  .cursor-dot,
+  .cursor-ring {
+    display: none;
+  }
+}

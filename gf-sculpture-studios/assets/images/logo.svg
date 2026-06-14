@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 60" width="320" height="60" role="img" aria-label="G.F. Sculpture Studios">
+  <title>G.F. Sculpture Studios</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&amp;display=swap');
+    .logo-text {
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      font-weight: 300;
+      fill: #1C1C1C;
+      letter-spacing: 0.08em;
+    }
+    .logo-main {
+      font-size: 22px;
+    }
+    .logo-sub {
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      fill: #8B6914;
+      font-family: 'DM Sans', 'Helvetica Neue', sans-serif;
+      font-weight: 400;
+    }
+  </style>
+  <text class="logo-text logo-main" x="2" y="32">G.F. Sculpture Studios</text>
+  <text class="logo-sub" x="3" y="50">GEOFF FAHEY · SCULPTOR</text>
+</svg>

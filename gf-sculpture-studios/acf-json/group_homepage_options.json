@@ -1,0 +1,91 @@
+[
+  {
+    "key": "group_homepage_options",
+    "title": "Homepage Options",
+    "fields": [
+      {
+        "key": "field_hp_intro_statement",
+        "label": "Intro Statement",
+        "name": "hp_intro_statement",
+        "type": "textarea",
+        "instructions": "The large italic statement that appears below the hero. Keep it to one memorable sentence.",
+        "required": 0,
+        "default_value": "Form discovered through material, patience, and the hand.",
+        "rows": 2,
+        "wrapper": { "width": "", "class": "", "id": "" }
+      },
+      {
+        "key": "field_hp_hero_image",
+        "label": "Hero Image",
+        "name": "hp_hero_image",
+        "type": "image",
+        "instructions": "Full-viewport hero image. Minimum 1920 × 1080px. A strong, atmospheric sculpture photograph works best.",
+        "required": 0,
+        "return_format": "array",
+        "preview_size": "medium",
+        "library": "all",
+        "min_width": "",
+        "min_height": "",
+        "max_width": "",
+        "max_height": ""
+      },
+      {
+        "key": "field_hp_statement_heading",
+        "label": "Statement Piece Heading",
+        "name": "hp_statement_heading",
+        "type": "text",
+        "instructions": "Heading for the full-bleed statement section (e.g. 'Statement Works').",
+        "required": 0,
+        "default_value": "Statement Works",
+        "wrapper": { "width": "", "class": "", "id": "" }
+      },
+      {
+        "key": "field_hp_statement_text",
+        "label": "Statement Piece Text",
+        "name": "hp_statement_text",
+        "type": "textarea",
+        "instructions": "Short paragraph about Geoff's approach to large-scale and statement works. 2–4 sentences.",
+        "required": 0,
+        "default_value": "[PLACEHOLDER: Short paragraph about Geoff's approach to large-scale and statement work.]",
+        "rows": 4,
+        "wrapper": { "width": "", "class": "", "id": "" }
+      },
+      {
+        "key": "field_hp_featured_works",
+        "label": "Featured Works (Horizontal Scroll)",
+        "name": "hp_featured_works",
+        "type": "relationship",
+        "instructions": "Choose 3–5 artworks to feature in the cinematic horizontal scroll section.",
+        "required": 0,
+        "post_type": ["artwork"],
+        "taxonomy": [],
+        "filters": ["search", "post_type"],
+        "return_format": "object",
+        "min": 0,
+        "max": 5,
+        "elements": ["featured_image"],
+        "wrapper": { "width": "", "class": "", "id": "" }
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "page_type",
+          "operator": "==",
+          "value": "front_page"
+        }
+      ]
+    ],
+    "menu_order": 5,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [],
+    "active": true,
+    "description": "Content controls for the homepage — hero image, intro statement, statement piece text, and featured works selection.",
+    "show_in_rest": 0,
+    "acf_version": "5.12.0",
+    "modified": 1718000000
+  }
+]
