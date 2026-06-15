@@ -33,22 +33,13 @@ jobs:
           TAG=${{ steps.version.outputs.tag }}
           ZIP_NAME="gf-sculpture-studios-${TAG}.zip"
 
-          zip -r "${ZIP_NAME}" gf-sculpture-studios/ \
-            --exclude "*.git*" \
-            --exclude "*/.DS_Store" \
-            --exclude "*/__MACOSX*" \
-            --exclude "*/node_modules/*" \
-            --exclude "*/.env" \
-            --exclude "*/package-lock.json" \
-            --exclude "*/yarn.lock" \
-            --exclude "*/.editorconfig" \
-            --exclude "*/.gitignore" \
-            --exclude "*/phpcs.xml" \
-            --exclude "*/phpunit.xml"
+          # git archive bundles all tracked files under a named folder,
+          # honoring .gitignore and export-ignore attributes automatically
+          git archive --format=zip --prefix=gf-sculpture-studios/ -o "${ZIP_NAME}" HEAD
 
           echo "ZIP_NAME=${ZIP_NAME}" >> $GITHUB_ENV
           echo "Built: ${ZIP_NAME}"
-          unzip -l "${ZIP_NAME}" | tail -5
+          unzip -l "${ZIP_NAME}" | tail -10
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
