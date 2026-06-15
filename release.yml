@@ -1,0 +1,79 @@
+name: Release Theme Package
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'   # Trigger on version tags like v1.0.0, v1.2.3
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag (e.g. v1.0.0)'
+        required: true
+
+jobs:
+  build-and-release:
+    name: Build & Release ZIP
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Get version
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "tag=${{ github.event.inputs.tag }}" >> $GITHUB_OUTPUT
+          else
+            echo "tag=${GITHUB_REF_NAME}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Build theme ZIP
+        run: |
+          TAG=${{ steps.version.outputs.tag }}
+          ZIP_NAME="gf-sculpture-studios-${TAG}.zip"
+
+          zip -r "${ZIP_NAME}" gf-sculpture-studios/ \
+            --exclude "*.git*" \
+            --exclude "*/.DS_Store" \
+            --exclude "*/__MACOSX*" \
+            --exclude "*/node_modules/*" \
+            --exclude "*/.env" \
+            --exclude "*/package-lock.json" \
+            --exclude "*/yarn.lock" \
+            --exclude "*/.editorconfig" \
+            --exclude "*/.gitignore" \
+            --exclude "*/phpcs.xml" \
+            --exclude "*/phpunit.xml"
+
+          echo "ZIP_NAME=${ZIP_NAME}" >> $GITHUB_ENV
+          echo "Built: ${ZIP_NAME}"
+          unzip -l "${ZIP_NAME}" | tail -5
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: "G.F. Sculpture Studios ${{ steps.version.outputs.tag }}"
+          body: |
+            ## G.F. Sculpture Studios WordPress Theme ${{ steps.version.outputs.tag }}
+
+            ### Installation
+            1. Download `${{ env.ZIP_NAME }}` below
+            2. In WordPress go to **Appearance → Themes → Add New → Upload Theme**
+            3. Upload the ZIP and activate
+
+            ### Required Plugins
+            - WooCommerce 8.x+
+            - Advanced Custom Fields (ACF) Free 6.x+
+            - Contact Form 7 5.x+
+
+            ### After Activating
+            - Go to **Settings → Permalinks → Save** to flush rewrite rules
+            - Go to **ACF → Field Groups** and sync any outdated field groups
+            - See `README.md` inside the ZIP for full setup instructions
+          files: ${{ env.ZIP_NAME }}
+          draft: false
+          prerelease: ${{ contains(steps.version.outputs.tag, '-beta') || contains(steps.version.outputs.tag, '-rc') }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
