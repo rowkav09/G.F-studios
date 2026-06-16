@@ -9,7 +9,9 @@ on:
       tag:
         description: 'Release tag (e.g. v1.0.0)'
         required: true
-
+permissions:
+  contents: write
+  
 jobs:
   build-and-release:
     name: Build & Release ZIP
